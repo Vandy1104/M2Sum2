@@ -1,3 +1,6 @@
+$success : #006400;
+
+// Required
 @import "bootstrap-4.4.1/scss/functions";
 @import "bootstrap-4.4.1/scss/variables";
 @import "bootstrap-4.4.1/scss/mixins";
@@ -19,7 +22,7 @@
 }
 
 body{
-  // background: black;
+  font-family: 'Open Sans', sans-serif;
 }
 
 
@@ -99,7 +102,7 @@ body{
 }
 
 .cardText{
-  width: 15em;
+  width: 25em;
 }
 
 .logoImg{
@@ -145,6 +148,10 @@ body{
 //Book Now Button.
 .book{
   cursor: pointer;
+}
+
+.bread{
+  margin-left: 250px;
 }
 
 

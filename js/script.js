@@ -494,10 +494,6 @@ script.src = 'https://maps.googleapis.com/maps/api/js?key=' + myKey[0].key + '&l
 document.getElementsByTagName('body')[0].appendChild(script);
 //map stylesheet
 
-// This example requires the Places library. Include the libraries=places
-// parameter when you first load the API. For example:
-// <script
-// src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 
 var distance;
 function initMap() {
@@ -507,7 +503,18 @@ function initMap() {
   var map = new google.maps.Map(document.getElementById('map'), {
     mapTypeControl: false,
     center: {lat: -40.9006, lng: 174.8860},
-    zoom: 6
+    zoom: 6,
+    styles: [
+      {
+        featureType: 'water',
+        stylers:[
+           {
+             // color: '#48dbfb'
+             color: '#00BFFF'
+           }
+         ]
+       },
+           ]
   });
 
   new AutocompleteDirectionsHandler(map);
@@ -655,6 +662,7 @@ AutocompleteDirectionsHandler.prototype.route = function() {
 
 //Contact menu
 document.getElementById('contact').addEventListener('click', function(){
+  $('#vehicleTypes, #submit').hide();
   document.getElementById('show').innerHTML = " "; //to clear the container
   $('.mainCarousel').hide();
   $('#map').hide();
@@ -713,17 +721,7 @@ function allTransport(){
   + '<br><button id= " ' + transport[i].id + ' " type="button" class="btn btn-primary modalClass modalClass1" data-toggle="modal" data-target=".bd-example-modal-lg">View More</button>'
   +  '</ul>'
   +  '</div>'
-//
-//   // += '<div class="row ml-4">'
-//   // +'<div class="col">'
-//   // + '<img class="img-thumbnail mt-3" src="' + transport[i].photo + ' "  alt="Vehicles"/>'
-//   // + '</div>'
-//   // + '<div class="col">'
-//   // + '</br><h5 class="text-danger">' + transport[i].vehicleName + '</h5>'
-//   // + '</br>Year : <h5 class="text-danger" >' + transport[i].year + '</h5>'
-//   // + '</br><h5 class="text-danger" > ' + transport[i].rent + '</h5>'
-//   // + '</div>'
-//   // + '</div>';
+
   }
 };
 
@@ -792,8 +790,8 @@ $('.modalClass').on('click', function(){
 
     + '<br><h6 class="w-100 text-justify"><b> Description: </b>' + transport[i].description + '</h6>'
     + '<br><h6 class="w-100 text-justify"><b> Features: </b>' + transport[i].features + '</h6>'
-    + '<br><div class="modal-footer"><button type="button" onClick="bookAlert()" class="btn btn-danger book">Book Now</button>'
-    + '<button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button></div>'
+    + '<br><div class="modal-footer"><button type="button" onClick="bookAlert()" class="btn btn-success book">Book Now</button>'
+    + '<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button></div>'
     + '</div>'
     + '</div>'
     }
@@ -828,7 +826,7 @@ $( function() {
 }
 
 
-//Home page Modal run by default.
+//Home page Modals by default.
 
 function modals1(){
 $('.modalClass1').on('click', function(){
@@ -837,8 +835,6 @@ $('.modalClass1').on('click', function(){
   //console.log(typeof(this.id));
 
   document.getElementById('modalContent').innerHTML = " ";
-
-
 
   for(var i = 0; i < transport.length; i++) {
   if (parseInt(this.id) === parseInt(transport[i].id)) {
@@ -873,7 +869,7 @@ $('.modalClass1').on('click', function(){
 
     + '<br><h6 class="w-100 text-justify"><b> Description: </b>' + transport[i].description + '</h6>'
     + '<br><h6 class="w-100 text-justify"><b> Features: </b>' + transport[i].features + '</h6>'
-    + '<div class="modal-footer"><button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button></div>'
+    + '<div class="modal-footer"><button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button></div>'
     + '</div>'
     + '</div>'
     }
@@ -890,82 +886,17 @@ document.getElementById('vehicles').addEventListener('click', function(){
   $('.wizard').hide();
   $('.map').hide();
   $('.mainCarousel').hide();
-    document.getElementById('show').innerHTML
-      = '<nav aria-label="breadcrumb">'
-      +  '<ol class="breadcrumb bg-white">'
-      + '<li class="breadcrumb-item"><a href="index.html">Home</a></li>'
-      + '<li class="breadcrumb-item active" aria-current="page">Vehicles</li>'
-      + '</ol>'
-      + '</nav>'
-      + '<select class="custom-select myContainer w-50" id="drop">'
-      + '<option selected>Select Vehicle</option>'
-      + '<option class="motorBike" value="1" onClick="motorBike()">Motor-Bike</option>'
-      + '<option class="smallCar" value="2">Small-Car</option>'
-      + '<option class="largeCar" value="3">Large-Car</option>'
-      + '<option class="motorHome" value="3">Motor-Home</option>'
-      + '</select>'
-  for(var i = 0; i < transport.length; i++) {
-    document.getElementById('show').innerHTML
-      += '<br><div class="row ml-4 container jumbotron w-75 mx-auto bg-dark text-white col-12 col-sm-12 col-md-12 col-lg-12">'
-      +  '<div class="col">'
-      +  '<img src="' + transport[i].photo + ' " class="card-img-top myTransport w-75 mt-4" alt="Vehicles"/>'
-      + '</div>'
-      + '<div class="col">'
-      + '</br><h5 class="">' + transport[i].type + '</h5>'
-      + '</br><h5 class="">' + transport[i].vehicleName + '</h5>'
-      + '<h5 class="">Make: ' + transport[i].year + '</h5>'
-      + '<h5 class="">$' + transport[i].rent + ' per day</h5>'
-      + '<h5 class="">Transmission: ' + transport[i].transmission + ' per day</h5>'
-      + '<h5 class="">Fuel: ' + transport[i].fuel + ' per day</h5>'
-      + '<h5 class="">Mileage: ' + transport[i].mileage + ' per day</h5>'
-      + '<h5 class="">Engine Capacity: ' + transport[i].engineCC + ' per day</h5>'
-      + '<img src="' + transport[i].rating + ' " class="card-img-top smaller" alt="Vehicles"/>'
-      + '<br><br><button id= " ' + transport[i].id + ' " type="button" class="btn btn-primary modalClass modalClass1" data-toggle="modal" data-target=".bd-example-modal-lg">View More</button>'
-      + '</div>'
-      + '</div>';
-        }
+          vehiclesForVehiclesMenu();
         modals1();
       });
 
-      var motorBike = transport.filter(function(bike){
-        return bike.type === "Motor-Bike";
-      });
 
-      function motorBike(){
-        console.log('Hey motorbike');
-          // if (motorBike) {
-          //   return bike1;
-          //   // console.log('hey');
-          //   document.getElementById('show').innerHTML = " ";
-          //   for(var i = 0; i < transport.length; i++) {
-          //   document.getElementById('show').innerHTML
-          //
-          //   += '<div class="vCard py-2 mt-3 mx-1 ml-5 myContainer clearfix col-sm-6 col-md-6 col-lg-4">'
-          //   +  '<img src="' + transport[i].photo + ' " class="card-img-top" alt="Vehicles"/>'
-          //   +  '<ul class="py-0 px-0 list-group list-group-flush">'
-          //   + '<li class="text-primary cardContent list-group-item">' + transport[i].vehicleName + '</li>'
-          //   + '<li class="text-primary cardContent list-group-item" >' + transport[i].type + '</li>'
-          //   + '<li class="text-primary cardContent list-group-item" > Rent: $ ' + transport[i].rent + ' per day </li>'
-          //   + '<img src="' + transport[i].rating + ' " class="card-img-top smaller" alt="Vehicles"/>'
-          //   + '<br><button id= " ' + transport[i].id + ' " type="button" class="btn btn-primary modalClass modalClass1" data-toggle="modal" data-target=".bd-example-modal-lg">View More</button>'
-          //   +  '</ul>'
-          //   +  '</div>'
-          //     }
-          // }
-      };
-
-    // if (("'#drop' option selected").value == '1') {
-      //   $('.motorBike').on('click', function(){
-      //     console.log('motorbike');
-      //   if (this.value === 1){
-      //   console.log('motor bike');
-      //   motorBike();
-      //   }
-      // });
 
   // Trigger Search Button
     var days, people, originInput, destinationInput;
     $('.searchBtn').on('click', function(){
+
+      //Sweetalert on search button
       let timerInterval
       Swal.fire({
         title: 'Searching...',
@@ -1001,7 +932,6 @@ document.getElementById('vehicles').addEventListener('click', function(){
           icon: 'error',
           title: 'Oops...',
           text: 'Please Enter Start & End Location!',
-          // footer: '<a href>Why do I have this issue?</a>'
         })
       }  // alert ends here.
 
@@ -1011,11 +941,10 @@ document.getElementById('vehicles').addEventListener('click', function(){
           icon: 'error',
           title: 'Oops...',
           text: 'Please Enter days between 1 to 15!',
-          // footer: '<a href>Why do I have this issue?</a>'
         })
       }
 
-       people = parseInt(document.getElementById('nop').value);
+      people = parseInt(document.getElementById('nop').value);
       console.log(days);
       console.log(people);
       console.log(distance);
@@ -1027,7 +956,7 @@ document.getElementById('vehicles').addEventListener('click', function(){
       + '</ol>'
       + '<h4 class="ml-5">Search results/</h4><br>'
       for(var i = 0; i < transport.length; i++) {
-     //   console.log('search result');
+
        console.log(i);
       if ((days >= transport[i].minDay) && (days<= transport[i].maxDay) &&(people >=transport[i].minPpl) && (people <= transport[i].maxPpl)){
       console.log('true');
@@ -1045,4 +974,80 @@ document.getElementById('vehicles').addEventListener('click', function(){
       }
     }
     modals();
+});   // Search button functionality ends here.
+
+
+//Filter button on Vehicles page.
+  $('#vehicleTypes, #submit').hide();
+  document.getElementById('vehicles').addEventListener('click', function(){
+  $('#vehicleTypes, #submit').show();
+});  //Filter button ends here.
+
+
+//Function containing vehicle to display on Vehicles page.
+function vehiclesForVehiclesMenu(){
+  for(var i = 0; i < transport.length; i++) {
+  document.getElementById('show').innerHTML
+  += '<br><div class="row ml-4 container jumbotron w-75 mx-auto bg-dark text-white col-12 col-sm-12 col-md-12 col-lg-12">'
+  +  '<div class="col">'
+  +  '<img src="' + transport[i].photo + ' " class="card-img-top myTransport w-75 mt-4" alt="Vehicles"/>'
+  + '</div>'
+  + '<div class="col">'
+  + '</br><h5 class="">' + transport[i].type + '</h5>'
+  + '</br><h5 class="">' + transport[i].vehicleName + '</h5>'
+  + '<h5 class="">Make: ' + transport[i].year + '</h5>'
+  + '<h5 class="">$' + transport[i].rent + ' per day</h5>'
+  + '<h5 class="">Transmission: ' + transport[i].transmission + ' per day</h5>'
+  + '<h5 class="">Fuel: ' + transport[i].fuel + ' per day</h5>'
+  + '<h5 class="">Mileage: ' + transport[i].mileage + ' per day</h5>'
+  + '<h5 class="">Engine Capacity: ' + transport[i].engineCC + ' per day</h5>'
+  + '<img src="' + transport[i].rating + ' " class="card-img-top smaller" alt="Vehicles"/>'
+  + '<br><br><button id= " ' + transport[i].id + ' " type="button" class="btn btn-primary modalClass modalClass1" data-toggle="modal" data-target=".bd-example-modal-lg">View More</button>'
+  + '</div>'
+  + '</div>';
+  }
+}      // Function ends here.
+
+
+
+//Filter button functionality.
+$('#submit').click(function(){
+  var vehicleType=document.getElementById('vehicleTypes').value;
+  console.log(vehicleType);
+  document.getElementById('show').innerHTML = " ";
+  for(var i = 0; i < transport.length; i++) {
+  if (transport[i].type === vehicleType){
+    document.getElementById('show').innerHTML
+    += '<br><div class="row ml-4 container jumbotron w-75 mx-auto bg-dark text-white col-12 col-sm-12 col-md-12 col-lg-12">'
+    +  '<div class="col">'
+    +  '<img src="' + transport[i].photo + ' " class="card-img-top myTransport w-75 mt-4" alt="Vehicles"/>'
+    + '</div>'
+    + '<div class="col">'
+    + '</br><h5 class="">' + transport[i].type + '</h5>'
+    + '</br><h5 class="">' + transport[i].vehicleName + '</h5>'
+    + '<h5 class="">Make: ' + transport[i].year + '</h5>'
+    + '<h5 class="">$' + transport[i].rent + ' per day</h5>'
+    + '<h5 class="">Transmission: ' + transport[i].transmission + ' per day</h5>'
+    + '<h5 class="">Fuel: ' + transport[i].fuel + ' per day</h5>'
+    + '<h5 class="">Mileage: ' + transport[i].mileage + ' per day</h5>'
+    + '<h5 class="">Engine Capacity: ' + transport[i].engineCC + ' per day</h5>'
+    + '<img src="' + transport[i].rating + ' " class="card-img-top smaller" alt="Vehicles"/>'
+    + '<br><br><button id= " ' + transport[i].id + ' " type="button" class="btn btn-primary modalClass modalClass1" data-toggle="modal" data-target=".bd-example-modal-lg">View More</button>'
+    + '</div>'
+    + '</div>';
+  }
+  }
+  modals1();
+});      //Filter button functionality ends here.
+
+
+
+//a tags for home menu linking.
+$('#anchor').click(function(){
+  ('#mainCarousel').show();
+});
+
+//Logo links with home page.
+$('#homeAnchor').click(function(){
+  ('#mainCarousel').show();
 });
